@@ -125,8 +125,11 @@ def docker_port_map() -> dict[int, str]:
         name, _, ports = line.partition("|")
         if not name:
             continue
-        for m in re.finditer(r"(?:0\.0\.0\.0|\[::\]):(\d+)->", ports):
-            mapping.setdefault(int(m.group(1)), name)
+        for m in re.finditer(r"(?:0\.0\.0\.0|\[::\]):(\d+)(?:-(\d+))?->", ports):
+            start = int(m.group(1))
+            end = int(m.group(2)) if m.group(2) else start
+            for port in range(start, end + 1):
+                mapping.setdefault(port, name)
     return mapping
 
 
