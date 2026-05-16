@@ -234,10 +234,10 @@ def format_usage(data: dict | None) -> str:
     extra = data.get("extra_usage") or {}
     extra_str = ""
     if extra.get("is_enabled"):
-        used = extra.get("used_credits") or 0
+        used = (extra.get("used_credits") or 0) / 100
         cur = extra.get("currency", "USD")
         sym = "$" if cur == "USD" else f" {cur}"
-        extra_str = f" · {sym}{used:g}"
+        extra_str = f" · {sym}{used:.2f}"
     return f"CC {pct:.0f}% · {rel}{extra_str}"
 
 
