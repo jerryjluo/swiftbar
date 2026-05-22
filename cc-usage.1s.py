@@ -27,6 +27,7 @@ CACHE_DIR = Path.home() / ".cache" / "swiftbar"
 USAGE_CACHE = CACHE_DIR / "cc-usage.json"
 USAGE_TTL = 5 * 60
 CLAUDE_USAGE_SCRIPT = Path.home() / "scripts" / "claude-usage.py"
+CCUSAGE_CHART_SCRIPT = Path.home() / "scripts" / "ccusage-chart.py"
 WEZTERM_BUNDLE = "com.github.wez.wezterm"
 SCRIPT_PATH = Path(__file__).resolve()
 
@@ -279,6 +280,12 @@ def deep_link(target: str) -> None:
 
 def render() -> None:
     print(format_usage(get_usage()))
+    print("---")
+    print(
+        f'📊 ccusage chart | shell="/Users/jerryluo/.local/bin/uv" '
+        f'param1="run" param2="{CCUSAGE_CHART_SCRIPT}" '
+        f'terminal=false refresh=false'
+    )
     print("---")
     sessions = sorted(load_sessions(), key=lambda s: s.age_seconds)
     if not sessions:
